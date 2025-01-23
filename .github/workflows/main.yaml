@@ -17,21 +17,22 @@ jobs:
       run : docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
 
     - name: build docker image 
-      run : docker build -t image/nodejs-app .
+      run : docker build -t sumedhraj957/docker-practice .
 
     - name: publish image to docker hub
-      run : docker push image/nodejs-app:latest
+      run : docker push sumedhraj957/docker-p:latest
 
   Deploy:
     needs: build    
+
     runs-on: self-hosted
     steps: 
-    
+
     - name: pull image from docker hub
       run: docker pull image/nodejs-app:late
-      
+
     - name: run docker container
-      run: docker run -d -p 4000:4000 --name my-container  mage/nodejs-app:latest
+      run: docker run -d -p 4000:4000 --name my-container sume-new
 
 
 
