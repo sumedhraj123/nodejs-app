@@ -40,7 +40,7 @@ jobs:
       run: docker pull sumedhraj957/docker-practice:main
 
     - name: run docker container
-      run: docker run -d -p 4000:4000 --name my-container 
+      run: docker run -d -p 4000:4000 --name node-service1
 
    
 
