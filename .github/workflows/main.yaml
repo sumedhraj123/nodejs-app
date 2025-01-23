@@ -37,7 +37,7 @@ jobs:
     steps: 
 
     - name: pull image from docker hub
-      run: docker pull image/nodejs-app:late
+      run: docker pull sumedhraj957/docker-practice:main
 
     - name: run docker container
       run: docker run -d -p 4000:4000 --name my-container 
