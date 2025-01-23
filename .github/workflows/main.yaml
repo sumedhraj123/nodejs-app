@@ -28,7 +28,7 @@ jobs:
       run : docker build -t sumedhraj957/docker-practice:latest .
 
     - name: publish image to docker hub
-      run : docker push node sumedhraj957/docker-p:latest
+      run : docker push node sumedhraj957/docker-practice:latest
 
   Deploy:
     needs: build    
