@@ -40,10 +40,10 @@ jobs:
       run: docker pull image/nodejs-app:late
 
     - name: run docker container
-      run: docker run -d -p 4000:4000 --name my-container 
+      run: docker run -d -p 4000:4000 --name my-running
 
     - name: start and run the container
-      run: docker start my-container
+      run: docker start my-running
 
 
 
