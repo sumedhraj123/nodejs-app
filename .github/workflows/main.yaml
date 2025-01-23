@@ -42,8 +42,7 @@ jobs:
     - name: run docker container
       run: docker run -d -p 4000:4000 --name my-container 
 
-    - name: start and run the container
-      run: docker start my-container
+   
 
 
 
