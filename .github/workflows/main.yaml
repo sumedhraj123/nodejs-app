@@ -1,36 +1,50 @@
-name: Deploy Node.js App
-
+name: Deploy Nodejs app
+ 
 on:
   push:
     branches:
       - main
   workflow_dispatch:
-
+ 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps: 
-      - name: Checkout source
-        uses: actions/checkout@v3
+    - name: checkout source
+      uses: actions/checkout@v3
 
-      - name: Login to Docker Hub
-        run: |
-          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+    - name: Set up Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+          node-version: ${{ matrix.node-version }}
+ 
+    - name: Install dependencies
+      run: npm install  
 
-      - name: Build Docker image
-        run: docker build -t sumedhraj957/docker-practice:latest .
+    - name: login to docker hub 
+      run : docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
 
-      - name: Publish image to Docker Hub
-        run: docker push sumedhraj957/docker-practice:latest
+    - name: build docker image 
+      run : docker build -t sumedhraj957/docker-practice:latest .
 
-  deploy:
-    needs: build
+    - name: publish image to docker hub
+      run : docker push node sumedhraj957/docker-p:latest
+
+  Deploy:
+    needs: build    
+
     runs-on: self-hosted
-    steps:
-      - name: Pull image from Docker Hub
-        run: docker pull sumedhraj957/docker-practice:latest
+    steps: 
 
-      - name: Run Docker container
-        run: |
-          docker stop my-container || true && docker rm my-container || true
-          docker run -d -p 4000:4000 --name my-container sumedhraj957/docker-practice:latest
+    - name: pull image from docker hub
+      run: docker pull image/nodejs-app:late
+
+    - name: run docker container
+      run: docker run -d -p 4000:4000 --name my-container 
+
+    - name: start and run the container
+      run: docker start my-container
+
+
+
+
