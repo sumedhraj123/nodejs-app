@@ -1,0 +1,38 @@
+name: Deploy Nodejs app
+ 
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+ 
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps: 
+    - name: checkout source
+      uses: actions/checkout@v3
+
+    - name: login to docker hub 
+      run : docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
+
+    - name: build docker image 
+      run : docker build -t image/nodejs-app .
+
+    - name: publish image to docker hub
+      run : docker push image/nodejs-app:latest
+
+  Deploy:
+    needs: build    
+    runs-on: self-hosted
+    steps: 
+    
+    - name: pull image from docker hub
+      run: docker pull image/nodejs-app:late
+      
+    - name: run docker container
+      run: docker run -d -p 4000:4000 --name my-container  mage/nodejs-app:latest
+
+
+
+
